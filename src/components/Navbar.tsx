@@ -13,7 +13,9 @@ export default function Navbar() {
             <Image src={coffeeLogo} className={styles.logo} alt="coffee" />
           </Link>
         </div>
-        <Link href="/">Coffee Shop</Link>
+        <Link className={styles.title} href="/">
+          Krispi Cafe
+        </Link>
         <div className={styles.pageLinks}>
           <Link href="/">Home</Link>
           <Link href="/">Shop</Link>

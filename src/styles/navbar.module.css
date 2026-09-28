@@ -53,6 +53,10 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.title {
+  font-weight: bold;
+}
+
 .pageLinks a:hover {
   border-bottom: 1px solid black;
 }
