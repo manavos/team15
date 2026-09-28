@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+// @ts-expect-error CSS is processed by Next.js and has no TypeScript declarations.
 import "./globals.css";
 
 //! Update metadata to match your project
