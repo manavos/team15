@@ -4,7 +4,9 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <h1>Home</h1>
+      <title>KRISPI</title>
+      <h1>Welcome to KRISPI!</h1>
+      <h2>Featured Menu</h2>
     </main>
   );
 }
