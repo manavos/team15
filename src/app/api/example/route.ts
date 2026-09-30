@@ -7,7 +7,7 @@ import { mockMenuItems } from "@/data/mockMenuItems";
  * @returns {message: string}
  */
 export async function GET() {
-  // await connectDB();
+  await connectDB();
   return Response.json({ mockMenuItems });
 }
 
