@@ -1,0 +1,35 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.home-page {
+  background-color: beige;
+  min-height: 100vh;
+  padding-bottom: 30px;
+}
+
+.title {
+  padding-left: 20px;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 0 40px 40px;
+}
+
+.menu-item {
+  text-align: center;
+}
+
+.menu-image {
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 2px solid black;
+  border-radius: 10px;
+}
