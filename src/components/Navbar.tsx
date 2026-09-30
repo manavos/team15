@@ -18,8 +18,9 @@ export default function Navbar() {
         </Link>
         <div className={styles.pageLinks}>
           <Link href="/">Home</Link>
-          <Link href="/">Shop</Link>
-          <Link href="/">About</Link>
+          <Link href="/order">Order</Link>
+          <Link href="/about">About</Link>
+          <Link href="/contact">Contact</Link>
           <Link href="/">
             <Image src={shoppingBag} className={styles.cart} alt="shopping cart"></Image>
           </Link>
