@@ -7,7 +7,7 @@ import { mockMenuItems } from "@/data/mockMenuItems";
  * @returns {message: string}
  */
 export async function GET() {
-  await connectDB();
+  // await connectDB();
   return Response.json({ mockMenuItems });
 }
 
@@ -18,4 +18,5 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   console.log(request);
+  return Response.json({ success: true });
 }
