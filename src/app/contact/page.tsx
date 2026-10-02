@@ -1,6 +1,9 @@
+import Navbar from "@/components/Navbar";
+
 export default function ContactPage() {
   return (
     <main>
+      <Navbar />
       <nav className="navbar">
         <h1 className="contact">Contact Us!</h1>
       </nav>
