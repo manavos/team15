@@ -1,6 +1,7 @@
 import connectDB from "@/database/db";
 import { NextResponse } from "next/server";
 import { mockMenuItems } from "@/data/mockMenuItems";
+import MenuItem from "@/database/menuItemSchema";
 
 /**
  * Example GET API route
@@ -8,11 +9,15 @@ import { mockMenuItems } from "@/data/mockMenuItems";
  */
 export async function GET() {
   await connectDB();
-  return Response.json({ mockMenuItems });
+  const menuItems = await MenuItem.find();
+  return Response.json({ menuItems });
 }
 
 export async function POST(request: Request) {
+  await connectDB(); //connect to db
   const data = await request.json();
+
+  const newItem = await MenuItem.create(data);
   return Response.json({ data });
 }
 
