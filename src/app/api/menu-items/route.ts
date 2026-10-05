@@ -1,5 +1,5 @@
 import connectDB from "@/database/db";
-import MenuItem from "@/database/itemSchema";
+import MenuItem from "@/database/menuItemSchema";
 
 /**
  * Example GET API route
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
   const data = await request.json();
   const newItem = await MenuItem.create(data);
 
-  await newItem.save();
+  //await newItem.save();
   return Response.json({ data });
 }
 

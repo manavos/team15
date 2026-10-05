@@ -1,4 +1,4 @@
-import MenuItem from "@/database/itemSchema";
+import MenuItem from "@/database/menuItemSchema";
 import connectDB from "@/database/db";
 
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
