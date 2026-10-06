@@ -18,10 +18,11 @@ export default function Navbar() {
         </Link>
         <div className={styles.pageLinks}>
           <Link href="/">Home</Link>
+          <Link href="/menu">Menu</Link>
           <Link href="/order">Order</Link>
           <Link href="/about">About</Link>
           <Link href="/contact">Contact</Link>
-          <Link href="/">
+          <Link href="/order">
             <Image src={shoppingBag} className={styles.cart} alt="shopping cart"></Image>
           </Link>
         </div>

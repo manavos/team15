@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { mockMenuItems, MenuItem } from "@/lib/mockMenuItems";
-import Navbar from "@/components/Navbar";
 
 export default function OrderPage() {
   // itemId -> quantity
@@ -23,44 +22,41 @@ export default function OrderPage() {
   const total = orderLines.reduce((sum, l) => sum + l.item.price * l.quantity, 0);
 
   return (
-    <div>
-      <Navbar />
-      <main style={{ display: "flex", gap: "2rem", padding: "2rem" }}>
-        <section style={{ flex: 2 }}>
-          <h1>Menu</h1>
-          <ul style={{ listStyle: "none", padding: 0 }}>
-            {mockMenuItems.map((item: MenuItem) => (
-              <li key={item.id} style={{ marginBottom: "1rem" }}>
-                <h3>
-                  {item.name} · ${item.price.toFixed(2)}
-                </h3>
-                <p>{item.description}</p>
-                <button onClick={() => addItem(item.id)}>Add to order</button>
-              </li>
-            ))}
-          </ul>
-        </section>
+    <main className="page two-column">
+      <section>
+        <h1>Menu</h1>
+        <ul className="item-list">
+          {mockMenuItems.map((item: MenuItem) => (
+            <li key={item.id}>
+              <h3>
+                {item.name} · ${item.price.toFixed(2)}
+              </h3>
+              <p>{item.description}</p>
+              <button onClick={() => addItem(item.id)}>Add to order</button>
+            </li>
+          ))}
+        </ul>
+      </section>
 
-        <aside style={{ flex: 1 }}>
-          <h2>Your Order</h2>
-          {orderLines.length === 0 ? (
-            <p>No items yet.</p>
-          ) : (
-            <>
-              <ul style={{ listStyle: "none", padding: 0 }}>
-                {orderLines.map(({ item, quantity }) => (
-                  <li key={item.id}>
-                    {item.name} × {quantity} — ${(item.price * quantity).toFixed(2)}{" "}
-                    <button onClick={() => removeItem(item.id)}>−</button>
-                    <button onClick={() => addItem(item.id)}>+</button>
-                  </li>
-                ))}
-              </ul>
-              <strong>Total: ${total.toFixed(2)}</strong>
-            </>
-          )}
-        </aside>
-      </main>
-    </div>
+      <aside>
+        <h2>Your Order</h2>
+        {orderLines.length === 0 ? (
+          <p>No items yet.</p>
+        ) : (
+          <>
+            <ul className="item-list">
+              {orderLines.map(({ item, quantity }) => (
+                <li key={item.id}>
+                  {item.name} × {quantity} — ${(item.price * quantity).toFixed(2)}{" "}
+                  <button onClick={() => removeItem(item.id)}>−</button>
+                  <button onClick={() => addItem(item.id)}>+</button>
+                </li>
+              ))}
+            </ul>
+            <strong>Total: ${total.toFixed(2)}</strong>
+          </>
+        )}
+      </aside>
+    </main>
   );
 }
