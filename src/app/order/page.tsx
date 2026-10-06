@@ -1,11 +1,28 @@
 "use client";
 
-import { useState } from "react";
-import { mockMenuItems, MenuItem } from "@/lib/mockMenuItems";
+import { useEffect, useState } from "react";
+
+type MenuItem = {
+  _id: string;
+  name: string;
+  price: number;
+  description: string;
+  available: boolean;
+  category: string;
+};
 
 export default function OrderPage() {
   // itemId -> quantity
   const [order, setOrder] = useState<Record<string, number>>({});
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+
+  useEffect(() => {
+    fetch("/api/menu-items")
+      .then((response) => response.json())
+      .then((data) => {
+        setMenuItems(data.items);
+      });
+  }, []);
 
   const addItem = (id: string) => setOrder((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
 
@@ -17,7 +34,7 @@ export default function OrderPage() {
     });
 
   // Derived values: no extra state needed
-  const orderLines = mockMenuItems.filter((item) => order[item.id]).map((item) => ({ item, quantity: order[item.id] }));
+  const orderLines = menuItems.filter((item) => order[item._id]).map((item) => ({ item, quantity: order[item._id] }));
 
   const total = orderLines.reduce((sum, l) => sum + l.item.price * l.quantity, 0);
 
@@ -26,13 +43,13 @@ export default function OrderPage() {
       <section>
         <h1>Menu</h1>
         <ul className="item-list">
-          {mockMenuItems.map((item: MenuItem) => (
-            <li key={item.id}>
+          {menuItems.map((item) => (
+            <li key={item._id}>
               <h3>
                 {item.name} · ${item.price.toFixed(2)}
               </h3>
               <p>{item.description}</p>
-              <button onClick={() => addItem(item.id)}>Add to order</button>
+              <button onClick={() => addItem(item._id)}>Add to order</button>
             </li>
           ))}
         </ul>
@@ -46,10 +63,10 @@ export default function OrderPage() {
           <>
             <ul className="item-list">
               {orderLines.map(({ item, quantity }) => (
-                <li key={item.id}>
+                <li key={item._id}>
                   {item.name} × {quantity} — ${(item.price * quantity).toFixed(2)}{" "}
-                  <button onClick={() => removeItem(item.id)}>−</button>
-                  <button onClick={() => addItem(item.id)}>+</button>
+                  <button onClick={() => removeItem(item._id)}>−</button>
+                  <button onClick={() => addItem(item._id)}>+</button>
                 </li>
               ))}
             </ul>
