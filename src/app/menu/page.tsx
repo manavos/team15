@@ -11,6 +11,14 @@ type MenuItem = {
   category: string;
 };
 
+const sections = [
+  { category: "coffee", title: "Coffee" },
+  { category: "tea", title: "Tea" },
+  { category: "milktea", title: "Milktea" },
+  { category: "pastry", title: "Pastry" },
+  { category: "cake", title: "Cake" },
+] as const;
+
 export default function Menu() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
 
@@ -22,63 +30,25 @@ export default function Menu() {
       });
   }, []);
 
-  const coffeeItems = menuItems.filter((item) => item.category === "coffee");
-  const teaItems = menuItems.filter((item) => item.category === "tea");
-  const milkteaItems = menuItems.filter((item) => item.category === "milktea");
-  const pastryItems = menuItems.filter((item) => item.category === "pastry");
-  const cakeItems = menuItems.filter((item) => item.category === "cake");
-
   return (
-    <main>
-      <h2>Menu Items</h2>
-      <h4>Coffee</h4>
-      {coffeeItems.map((item) => (
-        <li key={item._id} style={{ marginBottom: "20px" }}>
-          <span>{item.name}</span>
-          <span style={{ marginLeft: "20px" }}>${item.price}</span>
-          <div>{item.description}</div>
-          <div>Available? {item.available ? "Yes" : "No"}</div>
-        </li>
-      ))}
-
-      <h4>Tea</h4>
-      {teaItems.map((item) => (
-        <li key={item._id} style={{ marginBottom: "20px" }}>
-          <span>{item.name}</span>
-          <span style={{ marginLeft: "20px" }}>${item.price}</span>
-          <div>{item.description}</div>
-          <div>Available? {item.available ? "Yes" : "No"}</div>
-        </li>
-      ))}
-
-      <h4>Milktea</h4>
-      {milkteaItems.map((item) => (
-        <li key={item._id} style={{ marginBottom: "20px" }}>
-          <span>{item.name}</span>
-          <span style={{ marginLeft: "20px" }}>${item.price}</span>
-          <div>{item.description}</div>
-          <div>Available? {item.available ? "Yes" : "No"}</div>
-        </li>
-      ))}
-
-      <h4>Pastry</h4>
-      {pastryItems.map((item) => (
-        <li key={item._id} style={{ marginBottom: "20px" }}>
-          <span>{item.name}</span>
-          <span style={{ marginLeft: "20px" }}>${item.price}</span>
-          <div>{item.description}</div>
-          <div>Available? {item.available ? "Yes" : "No"}</div>
-        </li>
-      ))}
-
-      <h4>Cake</h4>
-      {cakeItems.map((item) => (
-        <li key={item._id} style={{ marginBottom: "20px" }}>
-          <span>{item.name}</span>
-          <span style={{ marginLeft: "20px" }}>${item.price}</span>
-          <div>{item.description}</div>
-          <div>Available? {item.available ? "Yes" : "No"}</div>
-        </li>
+    <main className="page">
+      <h1>Menu Items</h1>
+      {sections.map(({ category, title }) => (
+        <section key={category}>
+          <h2>{title}</h2>
+          <ul className="item-list">
+            {menuItems
+              .filter((item) => item.category === category)
+              .map((item) => (
+                <li key={item._id}>
+                  <strong>{item.name}</strong>
+                  <span className="price">${item.price.toFixed(2)}</span>
+                  <div>{item.description}</div>
+                  <div>Available? {item.available ? "Yes" : "No"}</div>
+                </li>
+              ))}
+          </ul>
+        </section>
       ))}
     </main>
   );

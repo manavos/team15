@@ -1,6 +1,5 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
 
 type MenuItem = {
@@ -24,16 +23,14 @@ export default function Home() {
       });
   }, []);
   return (
-    <main className="home-page">
-      <Navbar />
-
-      <section className="title">
+    <main className="page">
+      <section>
         <h1>Welcome to KRISPI!</h1>
         <p>KRISPI is a Cafe opened in 2026 that sells a select variety of drinks and appetizers!</p>
       </section>
 
       <section>
-        <h2 className="title">Featured Menu</h2>
+        <h2>Featured Menu</h2>
 
         <div className="food-grid">
           {menuItems.map((item) => (

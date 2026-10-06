@@ -21,14 +21,6 @@ const emptyForm: FormValues = {
   imageUrl: "",
 };
 
-const errorStyle = { color: "#c0392b", fontSize: "0.875rem", margin: "0.25rem 0 0" };
-const fieldStyle = { display: "flex", flexDirection: "column" as const, marginBottom: "1rem" };
-const inputStyle = (hasError: boolean) => ({
-  padding: "0.5rem",
-  border: `1px solid ${hasError ? "#c0392b" : "#ccc"}`,
-  borderRadius: "4px",
-});
-
 export default function MenuItemForm() {
   const [values, setValues] = useState<FormValues>(emptyForm);
   const [errors, setErrors] = useState<MenuItemErrors>({});
@@ -92,8 +84,8 @@ export default function MenuItemForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate style={{ maxWidth: "480px" }}>
-      <div style={fieldStyle}>
+    <form onSubmit={handleSubmit} noValidate className="form">
+      <div className="form-field">
         <label htmlFor="name">Name *</label>
         <input
           id="name"
@@ -104,16 +96,15 @@ export default function MenuItemForm() {
           onBlur={() => handleBlur("name")}
           aria-invalid={!!errors.name}
           aria-describedby={errors.name ? "name-error" : undefined}
-          style={inputStyle(!!errors.name)}
         />
         {errors.name && (
-          <p id="name-error" role="alert" style={errorStyle}>
+          <p id="name-error" role="alert" className="field-error">
             {errors.name}
           </p>
         )}
       </div>
 
-      <div style={fieldStyle}>
+      <div className="form-field">
         <label htmlFor="description">Description *</label>
         <textarea
           id="description"
@@ -124,16 +115,15 @@ export default function MenuItemForm() {
           onBlur={() => handleBlur("description")}
           aria-invalid={!!errors.description}
           aria-describedby={errors.description ? "description-error" : undefined}
-          style={inputStyle(!!errors.description)}
         />
         {errors.description && (
-          <p id="description-error" role="alert" style={errorStyle}>
+          <p id="description-error" role="alert" className="field-error">
             {errors.description}
           </p>
         )}
       </div>
 
-      <div style={fieldStyle}>
+      <div className="form-field">
         <label htmlFor="price">Price ($) *</label>
         {/* type="text" + inputMode so non-numeric input like "abc" reaches our validator instead of being silently dropped */}
         <input
@@ -147,16 +137,15 @@ export default function MenuItemForm() {
           onBlur={() => handleBlur("price")}
           aria-invalid={!!errors.price}
           aria-describedby={errors.price ? "price-error" : undefined}
-          style={inputStyle(!!errors.price)}
         />
         {errors.price && (
-          <p id="price-error" role="alert" style={errorStyle}>
+          <p id="price-error" role="alert" className="field-error">
             {errors.price}
           </p>
         )}
       </div>
 
-      <div style={fieldStyle}>
+      <div className="form-field">
         <label htmlFor="category">Category *</label>
         <select
           id="category"
@@ -166,7 +155,6 @@ export default function MenuItemForm() {
           onBlur={() => handleBlur("category")}
           aria-invalid={!!errors.category}
           aria-describedby={errors.category ? "category-error" : undefined}
-          style={inputStyle(!!errors.category)}
         >
           <option value="">Select a category</option>
           {CATEGORIES.map((c) => (
@@ -176,13 +164,13 @@ export default function MenuItemForm() {
           ))}
         </select>
         {errors.category && (
-          <p id="category-error" role="alert" style={errorStyle}>
+          <p id="category-error" role="alert" className="field-error">
             {errors.category}
           </p>
         )}
       </div>
 
-      <div style={fieldStyle}>
+      <div className="form-field">
         <label htmlFor="imageUrl">Image URL (optional)</label>
         <input
           id="imageUrl"
@@ -193,16 +181,15 @@ export default function MenuItemForm() {
           onBlur={() => handleBlur("imageUrl")}
           aria-invalid={!!errors.imageUrl}
           aria-describedby={errors.imageUrl ? "imageUrl-error" : undefined}
-          style={inputStyle(!!errors.imageUrl)}
         />
         {errors.imageUrl && (
-          <p id="imageUrl-error" role="alert" style={errorStyle}>
+          <p id="imageUrl-error" role="alert" className="field-error">
             {errors.imageUrl}
           </p>
         )}
       </div>
 
-      <div style={{ ...fieldStyle, flexDirection: "row", alignItems: "center", gap: "0.5rem" }}>
+      <div className="form-field inline">
         <input
           id="available"
           type="checkbox"
@@ -213,7 +200,7 @@ export default function MenuItemForm() {
       </div>
 
       {status && (
-        <p role="status" style={{ color: status.type === "success" ? "#1e8449" : "#c0392b", marginBottom: "1rem" }}>
+        <p role="status" className={status.type === "success" ? "status-success" : "status-error"}>
           {status.message}
         </p>
       )}
