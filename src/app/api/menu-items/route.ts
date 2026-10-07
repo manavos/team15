@@ -11,13 +11,6 @@ export async function GET() {
   return Response.json({ items });
 }
 
-// export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
-//   await connectDB();
-//   const { id } = await params
-//   const items = await MenuItem.findById(id)
-//   return Response.json({ items });
-// }
-
 export async function POST(request: Request) {
   await connectDB();
   const data = await request.json();
@@ -25,9 +18,4 @@ export async function POST(request: Request) {
 
   await newItem.save();
   return Response.json({ data });
-}
-
-export async function DELETE(request: Request) {
-  console.log(request);
-  return Response.json({ success: true });
 }
