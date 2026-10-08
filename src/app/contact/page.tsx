@@ -1,12 +1,7 @@
-import Navbar from "@/components/Navbar";
-
 export default function ContactPage() {
   return (
-    <main>
-      <Navbar />
-      <nav className="navbar">
-        <h1 className="contact">Contact Us!</h1>
-      </nav>
+    <main className="page">
+      <h1>Contact Us!</h1>
 
       <section className="contact-info">
         <h2>Address</h2>
@@ -31,15 +26,22 @@ export default function ContactPage() {
         </dd>
       </section>
 
-      <form id="contact-form">
-        <label htmlFor="name">Name:</label>
-        <input type="text" id="name" name="name" required />
+      <h2>Send us a message</h2>
+      <form id="contact-form" className="form">
+        <div className="form-field">
+          <label htmlFor="name">Name:</label>
+          <input type="text" id="name" name="name" required />
+        </div>
 
-        <label htmlFor="email">Email:</label>
-        <input type="email" id="email" name="email" required />
+        <div className="form-field">
+          <label htmlFor="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+        </div>
 
-        <label htmlFor="message">Message:</label>
-        <textarea id="message" name="message" required />
+        <div className="form-field">
+          <label htmlFor="message">Message:</label>
+          <textarea id="message" name="message" rows={4} required />
+        </div>
 
         <input type="submit" value="Submit" />
       </form>

@@ -1,11 +1,8 @@
 .wrapper {
-  margin: 0;
-  padding: 0;
   position: sticky;
   top: 0;
-  left: 0;
   width: 100%;
-  border-bottom: 1px solid rgb(232, 232, 232);
+  border-bottom: 1px solid var(--color-border);
   z-index: 11000;
 }
 
@@ -21,7 +18,7 @@
   display: flex;
   width: 100%;
   min-height: 70px;
-  background-color: #fdfdfd;
+  background-color: var(--color-surface);
   align-items: center;
 }
 
@@ -45,12 +42,9 @@
 .navbar a {
   display: flex;
   align-items: center;
-  text-align: center;
   padding: 12px;
-  color: rgb(0, 0, 0);
   text-decoration: none;
   font-size: 22px;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 .title {
