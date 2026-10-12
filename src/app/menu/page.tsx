@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import styles from "@/styles/menu.module.css";
 
 type MenuItem = {
   _id: string;
@@ -9,6 +10,7 @@ type MenuItem = {
   description: string;
   available: boolean;
   category: string;
+  imageUrl?: string;
 };
 
 const sections = [
@@ -31,25 +33,42 @@ export default function Menu() {
   }, []);
 
   return (
-    <main className="page">
-      <h1>Menu Items</h1>
-      {sections.map(({ category, title }) => (
-        <section key={category}>
-          <h2>{title}</h2>
-          <ul className="item-list">
-            {menuItems
-              .filter((item) => item.category === category)
-              .map((item) => (
-                <li key={item._id}>
-                  <strong>{item.name}</strong>
-                  <span className="price">${item.price.toFixed(2)}</span>
-                  <div>{item.description}</div>
-                  <div>Available? {item.available ? "Yes" : "No"}</div>
+    <main className={styles.page}>
+      <h1 className={styles.pageTitle}>Menu</h1>
+
+      {sections.map(({ category, title }) => {
+        const items = menuItems.filter((item) => item.category === category);
+
+        if (items.length === 0) {
+          return null;
+        }
+
+        return (
+          <section key={category} className={styles.section}>
+            <h2 className={styles.sectionTitle}>{title}</h2>
+
+            <ul className={styles.menuGrid}>
+              {items.map((item) => (
+                <li key={item._id} className={styles.menuCard}>
+                  {item.imageUrl && <img src={item.imageUrl} alt={item.name} className={styles.menuImage} />}
+
+                  <div className={styles.cardContent}>
+                    <div className={styles.cardHeader}>
+                      <h3 className={styles.itemName}>{item.name}</h3>
+
+                      <span className={styles.price}>${item.price.toFixed(2)}</span>
+                    </div>
+
+                    <p className={styles.description}>{item.description}</p>
+
+                    {!item.available && <p className={styles.unavailable}>Currently unavailable</p>}
+                  </div>
                 </li>
               ))}
-          </ul>
-        </section>
-      ))}
+            </ul>
+          </section>
+        );
+      })}
     </main>
   );
 }
