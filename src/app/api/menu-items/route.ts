@@ -13,13 +13,6 @@ export async function GET() {
   return Response.json({ items });
 }
 
-// export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
-//   await connectDB();
-//   const { id } = await params
-//   const items = await MenuItem.findById(id)
-//   return Response.json({ items });
-// }
-
 /**
  * Creates a menu item after validating the request body.
  * @returns 201 {item} on success, 400 {message, errors} if validation fails, 409 if the name is taken
