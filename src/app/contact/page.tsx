@@ -1,3 +1,5 @@
+import ContactForm from "@/components/ContactForm";
+
 export default function ContactPage() {
   return (
     <main className="page">
@@ -27,24 +29,7 @@ export default function ContactPage() {
       </section>
 
       <h2>Send us a message</h2>
-      <form id="contact-form" className="form">
-        <div className="form-field">
-          <label htmlFor="name">Name:</label>
-          <input type="text" id="name" name="name" required />
-        </div>
-
-        <div className="form-field">
-          <label htmlFor="email">Email:</label>
-          <input type="email" id="email" name="email" required />
-        </div>
-
-        <div className="form-field">
-          <label htmlFor="message">Message:</label>
-          <textarea id="message" name="message" rows={4} required />
-        </div>
-
-        <input type="submit" value="Submit" />
-      </form>
+      <ContactForm />
 
       <footer className="footer">© 2026 Krispi Cafe | All Rights Reserved</footer>
     </main>
