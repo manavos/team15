@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
+import StatusMessage from "./StatusMessage";
 import SubmitReviewForm from "./SubmitReviewForm";
 import styles from "../styles/review.module.css";
 
@@ -14,17 +15,28 @@ export default function ReviewForm() {
   const [buttonState, setButtonState] = useState(false);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const loadReviews = useCallback(async () => {
     setLoading(true);
-    const response = await fetch("/api/reviews");
-    const data = await response.json();
-    setReviews(data.reviews);
+    setError(null);
+    try {
+      const response = await fetch("/api/reviews");
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+      const data = await response.json();
+      setReviews(data.reviews ?? []);
+    } catch (err) {
+      console.error("Could not load reviews:", err);
+      setError("We couldn't load reviews right now. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
     loadReviews();
-    setLoading(false);
   }, [loadReviews]);
 
   const handleOnClick = () => {
@@ -39,7 +51,11 @@ export default function ReviewForm() {
       </div>
       {buttonState ? <SubmitReviewForm onSubmitted={loadReviews} /> : <div></div>}
       {loading ? (
-        <h1>Loading Reviews...</h1>
+        <StatusMessage type="loading">Loading reviews...</StatusMessage>
+      ) : error ? (
+        <StatusMessage type="error">{error}</StatusMessage>
+      ) : reviews.length === 0 ? (
+        <StatusMessage type="empty">No reviews yet. Be the first!</StatusMessage>
       ) : (
         <ul className={styles.unorderedList}>
           {reviews.map((review) => (

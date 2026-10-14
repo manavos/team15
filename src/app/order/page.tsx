@@ -1,28 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-type MenuItem = {
-  _id: string;
-  name: string;
-  price: number;
-  description: string;
-  available: boolean;
-  category: string;
-};
+import { useState } from "react";
+import StatusMessage from "@/components/StatusMessage";
+import { useMenuItems } from "@/lib/useMenuItems";
 
 export default function OrderPage() {
   // itemId -> quantity
   const [order, setOrder] = useState<Record<string, number>>({});
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-
-  useEffect(() => {
-    fetch("/api/menu-items")
-      .then((response) => response.json())
-      .then((data) => {
-        setMenuItems(data.items);
-      });
-  }, []);
+  const { items: menuItems, loading, error } = useMenuItems();
 
   const addItem = (id: string) => setOrder((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
 
@@ -42,17 +27,25 @@ export default function OrderPage() {
     <main className="page two-column">
       <section>
         <h1>Menu</h1>
-        <ul className="item-list">
-          {menuItems.map((item) => (
-            <li key={item._id}>
-              <h3>
-                {item.name} · ${item.price.toFixed(2)}
-              </h3>
-              <p>{item.description}</p>
-              <button onClick={() => addItem(item._id)}>Add to order</button>
-            </li>
-          ))}
-        </ul>
+        {loading ? (
+          <StatusMessage type="loading">Loading menu...</StatusMessage>
+        ) : error ? (
+          <StatusMessage type="error">{error}</StatusMessage>
+        ) : menuItems.length === 0 ? (
+          <StatusMessage type="empty">There are no items available to order right now.</StatusMessage>
+        ) : (
+          <ul className="item-list">
+            {menuItems.map((item) => (
+              <li key={item._id}>
+                <h3>
+                  {item.name} · ${item.price.toFixed(2)}
+                </h3>
+                <p>{item.description}</p>
+                <button onClick={() => addItem(item._id)}>Add to order</button>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       <aside>
