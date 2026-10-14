@@ -1,5 +1,6 @@
 "use client";
 
+import Gallery from "@/components/Gallery";
 import { useEffect, useState } from "react";
 
 type MenuItem = {
@@ -33,7 +34,7 @@ export default function Home() {
         <h2>Featured Menu</h2>
 
         <div className="food-grid">
-          {menuItems.map((item) => (
+          {menuItems.slice(0, 6).map((item) => (
             <div className="menu-item" key={item._id}>
               {item.imageUrl && <img className="menu-image" src={item.imageUrl} alt={item.name} />}
 
@@ -43,6 +44,11 @@ export default function Home() {
             </div>
           ))}
         </div>
+      </section>
+
+      <section>
+        <h2 className="gallery-heading">Gallery</h2>
+        <Gallery />
       </section>
     </main>
   );
