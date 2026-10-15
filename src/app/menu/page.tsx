@@ -1,40 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import StatusMessage from "@/components/StatusMessage";
+import { useMenuItems } from "@/lib/useMenuItems";
 import styles from "@/styles/menu.module.css";
-
-type MenuItem = {
-  _id: string;
-  name: string;
-  price: number;
-  description: string;
-  available: boolean;
-  category: string;
-  imageUrl?: string;
-};
 
 const sections = [
   { category: "coffee", title: "Coffee" },
   { category: "tea", title: "Tea" },
-  { category: "milktea", title: "Milktea" },
+  { category: "milktea", title: "Milk Tea" },
   { category: "pastry", title: "Pastry" },
   { category: "cake", title: "Cake" },
 ] as const;
 
 export default function Menu() {
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-
-  useEffect(() => {
-    fetch("/api/menu-items")
-      .then((response) => response.json())
-      .then((data) => {
-        setMenuItems(data.items);
-      });
-  }, []);
+  const { items: menuItems, loading, error } = useMenuItems();
 
   return (
     <main className={styles.page}>
       <h1 className={styles.pageTitle}>Menu</h1>
+
+      {loading && <StatusMessage type="loading">Loading menu...</StatusMessage>}
+      {error && <StatusMessage type="error">{error}</StatusMessage>}
+      {!loading && !error && menuItems.length === 0 && (
+        <StatusMessage type="empty">Our menu is empty right now. Check back soon!</StatusMessage>
+      )}
 
       {sections.map(({ category, title }) => {
         const items = menuItems.filter((item) => item.category === category);

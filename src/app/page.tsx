@@ -1,27 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-type MenuItem = {
-  _id: string;
-  name: string;
-  price: number;
-  description: string;
-  available: boolean;
-  category: string;
-  imageUrl?: string;
-};
+import StatusMessage from "@/components/StatusMessage";
+import { useMenuItems } from "@/lib/useMenuItems";
 
 export default function Home() {
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const { items: menuItems, loading, error } = useMenuItems();
 
-  useEffect(() => {
-    fetch("/api/menu-items")
-      .then((response) => response.json())
-      .then((data) => {
-        setMenuItems(data.items);
-      });
-  }, []);
   return (
     <main className="page">
       <section>
@@ -32,17 +16,25 @@ export default function Home() {
       <section>
         <h2>Featured Menu</h2>
 
-        <div className="food-grid">
-          {menuItems.map((item) => (
-            <div className="menu-item" key={item._id}>
-              {item.imageUrl && <img className="menu-image" src={item.imageUrl} alt={item.name} />}
+        {loading ? (
+          <StatusMessage type="loading">Loading featured menu...</StatusMessage>
+        ) : error ? (
+          <StatusMessage type="error">{error}</StatusMessage>
+        ) : menuItems.length === 0 ? (
+          <StatusMessage type="empty">No featured items yet. Check back soon!</StatusMessage>
+        ) : (
+          <div className="food-grid">
+            {menuItems.map((item) => (
+              <div className="menu-item" key={item._id}>
+                {item.imageUrl && <img className="menu-image" src={item.imageUrl} alt={item.name} />}
 
-              <h3>{item.name}</h3>
-              <p>{item.description}</p>
-              <span>${item.price}</span>
-            </div>
-          ))}
-        </div>
+                <h3>{item.name}</h3>
+                <p>{item.description}</p>
+                <span>${item.price}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
     </main>
   );
